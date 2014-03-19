@@ -1,0 +1,32 @@
+{
+  "name": "own-this-website-client",
+  "version": "0.1.0",
+  "description": "Unbuilt client assets",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "client",
+    "assets",
+    "gulp"
+  ],
+  "author": "rileyjshaw",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "gulp": "~3.5.6",
+    "gulp-load-plugins": "~0.4.0",
+    "gulp-util": "~2.2.14",
+    "gulp-rename": "~1.2.0",
+    "gulp-ruby-sass": "~0.4.0",
+    "gulp-minify-css": "~0.3.0",
+    "gulp-autoprefixer": "0.0.6",
+    "gulp-browserify": "~0.5.0",
+    "gulp-connect": "~1.0.9",
+    "gulp-jshint": "~1.5.0",
+    "reactify": "~0.10.0",
+    "react": "~0.9.0",
+    "envify": "~1.2.1",
+    "gulp-size": "~0.1.3"
+  }
+}

@@ -1,0 +1,56 @@
+html
+  height: 100%
+
+body
+  min-width: 100%
+  margin: 0
+  font-family: Lato, sans-serif
+
+.left-page, .right-page
+  box-sizing: border-box
+  position: absolute
+  height: 100%
+  width: 100%
+  border: 16px solid black
+  text-align: center
+
+.right-page
+  left: 100%
+
+h1, h2, p
+  position: absolute
+  width: 100%
+
+h1, h2
+  text-transform: uppercase
+
+h1
+  $size: 42px
+  top: 25%
+  line-height: $size
+  margin-top: -$size / 2
+  font-size: $size
+  font-weight: normal
+
+h2
+  $size: 120px
+  top: 50%
+  line-height: $size
+  margin-top: -$size / 2
+  font-size: $size
+
+.left-page p
+  $size: 42px
+  top: 75%
+  line-height: $size
+  margin-top: -$size / 2
+  font-size: $size
+
+table
+  height: 100%
+  width: 60%
+  margin: 0 auto
+  font-size: 24px
+
+td
+  width: 50%
