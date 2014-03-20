@@ -9,7 +9,3 @@ React.renderComponent(
   <UI url="./scores.json" />,
   document.getElementById('app-container')
 );
-
-<ParentUI>
-  <UI prop1=x />
-  </ParentUI>

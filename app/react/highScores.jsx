@@ -1,5 +1,8 @@
 var React = require('react');
 
+// TODO: Make it flat in gulp
+var server = require('../js/server.js')
+
 var ScoreWindow = React.createClass({
   getInitialState: function() {
     return {
@@ -7,13 +10,16 @@ var ScoreWindow = React.createClass({
     };
   },
   componentWillMount: function() {
-    this.loadScoresFromServer();
-    setInterval(this.loadScoresFromServer, this.props.pollInterval);
+    this.setState({scores: server.getHighScores()});
+    var component = this;
+    setInterval(function() {
+      component.setState({scores: server.getHighScores()});
+    }, 3000);
   },
   render: function(){
     return (
-      <div className="right-page">
-        <a className="back-arrow"></a>
+      <div className="score-page">
+        <a className="throne-link"></a>
         <ScoreTable scores={this.state.scores} />
       </div>
     );
