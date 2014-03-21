@@ -13,7 +13,6 @@
   "author": "rileyjshaw",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "connect": "~2.14.3",
-    "priorityqueuejs": "~0.2.0"
+    "connect": "~2.14.3"
   }
 }

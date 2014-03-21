@@ -33,10 +33,13 @@ var Throne = React.createClass({
 });
 
 var ThroneMid = React.createClass({
+  toggleFormDisplay: function() {
+
+  },
   render: function() {
     return (
       <div className="mid">
-        <h2>{this.props.king.name}</h2>
+        <h2 onClick={this.toggleFormDisplay}>{this.props.king.name}</h2>
         <ChallengerForm onNameSubmit={this.props.onNameSubmit} />
       </div>
     );
