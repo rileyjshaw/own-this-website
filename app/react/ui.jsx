@@ -7,8 +7,8 @@ var UI = React.createClass({
   render: function() {
     return (
       <div>
-        <Throne />
-        <HighScores />
+        <Throne url={this.props.url} />
+        <HighScores url={this.props.url} />
       </div>
     );
   }

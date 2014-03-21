@@ -6,6 +6,6 @@ var UI = require('../react/ui.jsx');
 var king = 'Riley';
 
 React.renderComponent(
-  <UI url="./scores.json" />,
+  <UI url="SERVER-URL-HERE" />,
   document.getElementById('app-container')
 );
