@@ -8,13 +8,15 @@ var Throne = React.createClass({
   },
   getInitialState: function() {
     return {
-      name: 'Blank',
+      name: 'Elvis',
       score: 0
     };
   },
   handleNameSubmit: function(name){
     //this.setState({ name: name });
-    this.setState(server.setKing(name));
+    if (name !== this.state.name) {
+      this.setState(server.setKing(name));
+    }
   },
   componentWillMount: function() {
     this.setState(server.getKing());
