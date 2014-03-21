@@ -8,7 +8,8 @@ var paths = {
       all: '{js,react}/**/*.{js,jsx}',
       entry: 'js/main.jsx'
     },
-    stylesheets: 'sass/*.sass'
+    stylesheets: 'sass/*.sass',
+    images: 'img/**/*'
   },
   dist: {
     root: '../dist',
@@ -53,7 +54,14 @@ gulp.task('html', function() {
     .pipe(gulp.dest( paths.dist.root ))
     .pipe($.size())
     .pipe($.connect.reload())
-})
+});
+
+gulp.task('images', function() {
+  return gulp.src(paths.app.images)
+    .pipe(gulp.dest( paths.dist.images ))
+    .pipe($.size())
+    .pipe($.connect.reload())
+});
 
 // gulp.task('clean', function () {
 //     return gulp.src([paths.dist.stylesheets, path.dist.scripts, path.dist.images], { read: false }).pipe($.clean());
@@ -62,6 +70,7 @@ gulp.task('html', function() {
 gulp.task('watch', function() {
   gulp.watch(paths.app.scripts.all, ['scripts']);
   gulp.watch(paths.app.stylesheets, ['sass']);
+  gulp.watch(paths.app.images, ['images']);
 });
 
 gulp.task('connect', $.connect.server({
@@ -73,6 +82,6 @@ gulp.task('connect', $.connect.server({
     }
 }));
 
-gulp.task('default', [ 'scripts', 'sass', 'watch' ]);
+gulp.task('default', [ 'scripts', 'sass', 'html', 'images', 'watch' ]);
 
 // gulp.task( 'deploy', [ 'scripts', 'sass' ])

@@ -1,6 +1,6 @@
-var React = require('react');
-
-var server = require('../js/server.js');
+var
+React = require('react'),
+server = require('../js/server.js');
 
 var Throne = React.createClass({
   incrementScore: function() {
@@ -33,14 +33,23 @@ var Throne = React.createClass({
 });
 
 var ThroneMid = React.createClass({
+  handleNameSubmit: function() {
+    this.toggleFormDisplay();
+    this.props.onNameSubmit();
+  },
+  getInitialState: function() {
+    return { formVisible: 0 };
+  },
   toggleFormDisplay: function() {
-
+    this.setState({ formVisible: 1 - this.state.formVisible });
   },
   render: function() {
     return (
       <div className="mid">
-        <h2 onClick={this.toggleFormDisplay}>{this.props.king.name}</h2>
-        <ChallengerForm onNameSubmit={this.props.onNameSubmit} />
+        { this.state.formVisible
+          ? <ChallengerForm onNameSubmit={this.handleNameSubmit} />
+          : <h2 onClick={this.toggleFormDisplay}>{this.props.king.name}</h2>
+        }
       </div>
     );
   }
@@ -61,7 +70,7 @@ var ChallengerForm = React.createClass({
     return (
       <form className="challengerForm" onSubmit={this.handleSubmit} >
         <input type="text" placeholder="Take it over" ref="challenger" />
-        <input type="submit" value="Go" />
+        <button type="submit" value="Go"><img src="img/crown.svg" alt="Crown" /></button>
       </form>
     );
   }

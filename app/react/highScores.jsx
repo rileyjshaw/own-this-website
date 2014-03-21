@@ -1,7 +1,8 @@
-var React = require('react');
+var
+React = require('react'),
+server = require('../js/server.js');
 
 // TODO: Make it flat in gulp
-var server = require('../js/server.js')
 
 var ScoreWindow = React.createClass({
   getInitialState: function() {

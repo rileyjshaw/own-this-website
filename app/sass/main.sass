@@ -4,9 +4,11 @@ html
 body
   min-width: 100%
   margin: 0
+
+body, input, select, textarea, button
   font-family: Lato, sans-serif
 
-.left-page, .right-page
+.throne-page, .score-page
   box-sizing: border-box
   position: absolute
   height: 100%
@@ -14,14 +16,14 @@ body
   border: 16px solid black
   text-align: center
 
-.right-page
+.score-page
   left: 100%
 
-h1, h2, p
+h1, .mid, p
   position: absolute
   width: 100%
 
-h1, h2
+h1, .mid
   text-transform: uppercase
 
 h1
@@ -32,14 +34,40 @@ h1
   font-size: $size
   font-weight: normal
 
-h2
+.mid
   $size: 120px
   top: 50%
+  height: $size
   line-height: $size
   margin-top: -$size / 2
   font-size: $size
 
-.left-page p
+  h2
+    margin: 0
+    font-size: 1em
+    cursor: pointer
+
+  form
+    input, button
+      box-sizing: border-box
+      height: $size
+      width: 50% // button overrides this
+      border: 1px solid black
+      vertical-align: top
+      text-align: center
+      font-size: $size / 2
+
+    button
+      width: $size
+      padding: 0
+      color: white
+      background-color: black
+
+      img
+        height: 96px
+        margin: 12px
+
+.throne-page p
   $size: 42px
   top: 75%
   line-height: $size
