@@ -1,15 +1,15 @@
 var
 gulp = require('gulp'),
-$ = require('gulp-load-plugins')({lazy: false});
-
-var paths = {
+$ = require('gulp-load-plugins')({lazy: false}),
+paths = {
   app: {
     scripts: {
       all: '{js,react}/**/*.{js,jsx}',
       entry: 'js/main.jsx'
     },
     stylesheets: 'sass/*.sass',
-    images: 'img/**/*'
+    images: 'img/**/*',
+    extras: '*.{png,ico,txt,xml}'
   },
   dist: {
     root: '../dist',
@@ -20,6 +20,8 @@ var paths = {
   tests: '../tests'
 };
 
+// TODO: Add imageoptim for /img and favicons
+
 gulp.task('lint', function() {
   return gulp.src(paths.app.scripts.all)
     .pipe($.jshint())
@@ -27,14 +29,14 @@ gulp.task('lint', function() {
 });
 
 gulp.task('scripts', function() {
-  return gulp.src( paths.app.scripts.entry )
-    .pipe( $.browserify({
+  return gulp.src(paths.app.scripts.entry)
+    .pipe($.browserify({
       transform: ['reactify'],
       insertGlobals : false,
       debug : !$.util.env.production
-    }) )
-    .pipe($.rename( 'all.js' ))
-    .pipe(gulp.dest( paths.dist.scripts ))
+    }))
+    .pipe($.rename('all.js'))
+    .pipe(gulp.dest(paths.dist.scripts))
     .pipe($.size())
     .pipe($.connect.reload())
 });
@@ -44,21 +46,28 @@ gulp.task('sass', function () {
     .pipe($.rubySass())
     .pipe($.autoprefixer())
     .pipe($.minifyCss())
-    .pipe(gulp.dest( paths.dist.stylesheets ))
+    .pipe(gulp.dest(paths.dist.stylesheets))
     .pipe($.size())
     .pipe($.connect.reload())
 });
 
 gulp.task('html', function() {
   return gulp.src('app/**/*.html')
-    .pipe(gulp.dest( paths.dist.root ))
+    .pipe(gulp.dest(paths.dist.root))
     .pipe($.size())
     .pipe($.connect.reload())
 });
 
 gulp.task('images', function() {
   return gulp.src(paths.app.images)
-    .pipe(gulp.dest( paths.dist.images ))
+    .pipe(gulp.dest(paths.dist.images))
+    .pipe($.size())
+    .pipe($.connect.reload())
+});
+
+gulp.task('extras', function() {
+  return gulp.src(paths.app.extras)
+    .pipe(gulp.dest(paths.dist.root))
     .pipe($.size())
     .pipe($.connect.reload())
 });
@@ -82,6 +91,6 @@ gulp.task('connect', $.connect.server({
     }
 }));
 
-gulp.task('default', [ 'scripts', 'sass', 'html', 'images', 'watch' ]);
+gulp.task('default', ['scripts', 'sass', 'html', 'extras', 'images', 'watch']);
 
 // gulp.task( 'deploy', [ 'scripts', 'sass' ])
