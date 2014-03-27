@@ -8,6 +8,20 @@ body
 body, input, select, textarea, button
   font-family: Lato, sans-serif
 
+.windowabcde-enter
+  opacity: 0.01
+  transition: opacity 10s ease-in
+
+.windowabcde-enter.windowabcde-enter-active
+  opacity: 1
+
+.windowabcde-leave
+  opacity: 1
+  transition: opacity 10s ease-in
+
+.windowabcde-leave.windowabcde-leave-active
+  opacity: 0.01
+
 .throne-page, .score-page
   box-sizing: border-box
   position: absolute
@@ -16,14 +30,20 @@ body, input, select, textarea, button
   border: 16px solid black
   text-align: center
 
-.score-page
-  left: 100%
+.page-link
+  position: absolute
+  bottom: 2px
+  right: 2px
+  padding: .4em
+  cursor: pointer
+  color: white
+  background: black
 
 h1, .mid, p
   position: absolute
   width: 100%
 
-h1, .mid
+h1, .mid, input, a
   text-transform: uppercase
 
 h1
@@ -51,15 +71,24 @@ h1
     input, button
       box-sizing: border-box
       height: $size
-      width: 50% // button overrides this
+      width: 36% // button overrides this
       border: 1px solid black
+      outline: none
       vertical-align: top
-      text-align: center
       font-size: $size / 2
+
+    input
+      min-width: 400px
+      padding-left: 48px
+
+    ::placeholder
+      text-transform: none
 
     button
       width: $size
       padding: 0
+      cursor: pointer
+      text-align: center
       color: white
       background-color: black
 

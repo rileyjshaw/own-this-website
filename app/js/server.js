@@ -52,7 +52,6 @@ module.exports = {
         score: 0
       }) - 1;
     }
-    console.log(tableIndex);
     return king = highScores[tableIndex];
   }
 };

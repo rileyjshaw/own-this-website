@@ -1,6 +1,8 @@
 var
 React = require('react'),
-server = require('../js/server.js');
+Server = require('../js/server.js'),
+Shared = require('./shared.jsx'),
+PageLink = Shared.PageLink;
 
 // TODO: Make it flat in gulp
 
@@ -10,18 +12,24 @@ var ScoreWindow = React.createClass({
       scores: []
     };
   },
+  handlePageChange: function(page) {
+    this.props.onPageChange(page);
+  },
   componentWillMount: function() {
-    this.setState({scores: server.getHighScores()});
+    this.setState({scores: Server.getHighScores()});
     var component = this;
-    setInterval(function() {
-      component.setState({scores: server.getHighScores()});
+    this.updater = setInterval(function() {
+      component.setState({scores: Server.getHighScores()});
     }, 3000);
+  },
+  componentWillUnmount: function() {
+    clearInterval(this.updater);
   },
   render: function(){
     return (
       <div className="score-page">
-        <a className="throne-link"></a>
         <ScoreTable scores={this.state.scores} />
+        <PageLink onPageChange={this.handlePageChange} page="throne">Back</PageLink>
       </div>
     );
   }
