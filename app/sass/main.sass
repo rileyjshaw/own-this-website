@@ -1,5 +1,6 @@
 html
   height: 100%
+  overflow: hidden
 
 body
   min-width: 100%
@@ -8,19 +9,30 @@ body
 body, input, select, textarea, button
   font-family: Lato, sans-serif
 
-.windowabcde-enter
-  opacity: 0.01
-  transition: opacity 10s ease-in
+.window-enter, .window-leave
+  transition: left 0.3s linear, right 0.3s linear
 
-.windowabcde-enter.windowabcde-enter-active
-  opacity: 1
+.window-enter
+  &.throne-page
+    right: 100%
+    &.window-enter-active
+      right: 0
 
-.windowabcde-leave
-  opacity: 1
-  transition: opacity 10s ease-in
+  &.score-page
+    left: 100%
+    &.window-enter-active
+      left: 0
 
-.windowabcde-leave.windowabcde-leave-active
-  opacity: 0.01
+.window-leave
+  &.throne-page
+    right: 0
+    &.window-leave-active
+      right: 100%
+
+  &.score-page
+    left: 0
+    &.window-leave-active
+      left: 100%
 
 .throne-page, .score-page
   box-sizing: border-box

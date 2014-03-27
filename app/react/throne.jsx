@@ -1,5 +1,5 @@
 var
-React = require('react'),
+React = require('react/addons'),
 Server = require('../js/server.js')
 Shared = require('./shared.jsx'),
 PageLink = Shared.PageLink;

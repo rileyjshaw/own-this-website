@@ -1,5 +1,5 @@
 var
-React = require('react'),
+React = require('react/addons'),
 Server = require('../js/server.js'),
 Shared = require('./shared.jsx'),
 PageLink = Shared.PageLink;
@@ -39,7 +39,7 @@ var ScoreTable = React.createClass({
   render: function() {
     var scoreRows = this.props.scores.map(function(score) {
       return (
-        <tr>
+        <tr key={score.name}>
           <td>{score.name}</td>
           <td>{score.score}s</td>
         </tr>

@@ -1,6 +1,5 @@
 var
-React = require('react'),
-server = require('../js/server.js');
+React = require('react/addons');
 
 var PageLink = React.createClass({
   render: function() {
