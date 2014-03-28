@@ -1,9 +1,7 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+var React = require('react/addons');
 var UI = require('../react/ui.jsx');
-
-var king = 'Riley';
 
 React.renderComponent(
   <UI url="SERVER-URL-HERE" />,

@@ -1,29 +1,31 @@
 var
 React = require('react/addons'),
-Server = require('../js/server.js')
 Shared = require('./shared.jsx'),
 PageLink = Shared.PageLink;
 
 var Throne = React.createClass({
   incrementScore: function() {
-    this.setState({score: this.state.score + 1});
+    if (this.props.king.name) {
+      this.setState({addedScore: this.state.addedScore + 1});
+    }
   },
   getInitialState: function() {
     return {
-      name: 'Elvis',
-      score: 0
+      addedScore: 0
     };
   },
   handlePageChange: function(page) {
     this.props.onPageChange(page);
   },
   handleNameSubmit: function(name){
-    if (name !== this.state.name) {
-      this.setState(Server.setKing(name));
+    if (name !== this.props.king.name) {
+      this.props.socket.emit('setKing', name);
     }
   },
-  componentWillMount: function() {
-    this.setState(Server.getKing());
+  componentWillReceiveProps: function(nextProps) {
+    this.setState( {addedScore: 0} );
+  },
+  componentDidMount: function() {
     this.updater = setInterval(this.incrementScore, 1000);
   },
   componentWillUnmount: function() {
@@ -33,8 +35,8 @@ var Throne = React.createClass({
     return (
       <div className="throne-page">
         <h1>Owner of this website:</h1>
-        <ThroneMid king={this.state} onNameSubmit={this.handleNameSubmit} />
-        <p>{this.state.score}s</p>
+        <ThroneMid name={this.props.king.name} onNameSubmit={this.handleNameSubmit} />
+        <p>{+this.props.king.initialScore + this.state.addedScore}s</p>
         <PageLink onPageChange={this.handlePageChange} page="scores">High Scores</PageLink>
       </div>
     );
@@ -57,7 +59,7 @@ var ThroneMid = React.createClass({
       <div className="mid">
         { this.state.formVisible
           ? <ChallengerForm onNameSubmit={this.handleNameSubmit} ref="input" />
-          : <h2 onClick={this.toggleFormDisplay}>{this.props.king.name}</h2>
+          : <h2 onClick={this.toggleFormDisplay}>{this.props.name}</h2>
         }
       </div>
     );
@@ -79,6 +81,7 @@ var ChallengerForm = React.createClass({
     this.refs.challenger.getDOMNode().focus();
   },
   render: function() {
+
     return (
       <form className="challengerForm" onSubmit={this.handleNameSubmit} >
         <input type="text" placeholder="Take it over" ref="challenger" />

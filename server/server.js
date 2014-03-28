@@ -1,85 +1,59 @@
 var
-connect = require('connect'),
-http = require('http'),
-fs = require('fs'),
-path = require('path'),
+io = require('socket.io').listen(8000),
 redis = require('redis'),
-PROJECT_ROOT = path.join('..', __dirname),
-FILE_SERVE_ROOT = path.join(PROJECT_ROOT, 'dist'),
-client = redis.createClient(),
+redis_client = redis.createClient(),
 king = {
-  name: '',
+  name: 'Nobody',
   score: 0
 },
 officialScoreKeeper = setInterval(function() {
   var name = king.name;
   if (name) {
-    client.zincrby('scores', 1, king.name);
+    redis_client.zincrby('scores', 1, king.name);
   }
 }, 1000);
 
-client.on("error", function (err) {
+// TODO: set up publish / subscribe
+// https://github.com/mranney/node_redis
+
+redis_client.on("error", function (err) {
   console.log("Redis error " + err);
 });
 
-connect.createServer(
-    connect.static(FILE_SERVE_ROOT)
-).listen(1234);
-
-module.exports = {
-  getHighScores: function() {
-    return client.zrange('scores', 0, 9, true) // WITHSCORES is true
-  },
-  getKing: function() {
-    return king;
-  },
-  setKing: function(name) {
-    var score = client.zscore('scores', name);
-
-    if (!score) {
-      client.zadd('scores', 0, name);
-    }
-    return king = {
-      name: name,
-      score: score
-    };
-  }
-};
-
-
-/*
-var request = new XMLHttpRequest();
-request.open('POST', this.props.url, true);
-request.setRequestHeader('Content-Type', 'json');
-request.send(name);
-*/
-
-/*
-
-loadScoresFromServer: function() {
-  var component = this;
-
-  request = new XMLHttpRequest();
-  request.open('GET', this.props.url, true);
-
-  request.onload = function() {
-    if (request.status >= 200 && request.status < 400){
-      // Success!
-      component.setState({
-        scores: JSON.parse(request.responseText)
-      });
-    } else {
-      // We reached our target server, but it returned an error
-      console.error(component.props.url, status, err.toString());
-    }
-  };
-
-  request.onerror = function() {
-    // There was a connection error of some sort
-    console.error(component.props.url, status, err.toString());
-  };
-
-  request.send();
+function getHighScores() {
+  return redis_client.zrange('scores', 0, 9, true) // WITHSCORES is true
 }
 
-*/
+function changeStoredKing(name, score) {
+  king = {
+    name: name,
+    score: score
+  };
+  io.sockets.emit('updateKing', king);
+}
+
+function setKing(name, socket) {
+  var score;
+
+  if(typeof name === 'string') {
+    name = name.toUpperCase();
+
+    redis_client.zscore('scores', name, function(err, res) {
+      if (res === null) {
+        redis_client.zadd('scores', 0, name);
+        res = 0;
+      }
+      changeStoredKing(name, res);
+    });
+
+  } else {
+    socket.emit('news', 'Your name should be a string, sneakypants.');
+  }
+}
+
+io.sockets.on('connection', function (socket) {
+  socket.emit('updateKing', king);
+  socket.on('setKing', function (name) {
+    setKing(name, socket);
+  });
+});

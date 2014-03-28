@@ -7,8 +7,8 @@ var Page = React.createClass({
   render: function() {
     return (
       this.props.key === 'throne'
-        ? <Throne url={this.props.url} onPageChange={this.props.onPageChange} />
-        : <HighScores url={this.props.url} onPageChange={this.props.onPageChange} />
+        ? <Throne url={this.props.url} onPageChange={this.props.onPageChange} king={this.props.pageData} socket={this.props.socket} />
+        : <HighScores url={this.props.url} onPageChange={this.props.onPageChange} scores={this.props.pageData} socket={this.props.socket} />
     );
   }
 });
