@@ -82,6 +82,11 @@ gulp.task('watch', function() {
   gulp.watch(paths.app.images, ['images']);
 });
 
+gulp.task('gh-pages', function () {
+  gulp.src("paths.dist.root")
+    .pipe($.ghPages('https://github.com/rileyjshaw/own-this-website.git'));
+});
+
 gulp.task('connect', $.connect.server({
     root: [paths.dist.root],
     port: 1234,
@@ -92,5 +97,4 @@ gulp.task('connect', $.connect.server({
 }));
 
 gulp.task('default', ['scripts', 'sass', 'html', 'extras', 'images', 'watch']);
-
-// gulp.task( 'deploy', [ 'scripts', 'sass' ])
+gulp.task('deploy', ['scripts', 'sass', 'html', 'extras', 'images', 'gh-pages']);
