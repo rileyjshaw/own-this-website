@@ -96,5 +96,5 @@ gulp.task('connect', $.connect.server({
     }
 }));
 
-gulp.task('default', ['scripts', 'sass', 'html', 'extras', 'images', 'watch']);
+gulp.task('default', ['scripts', 'sass', 'html', 'extras', 'images', 'watch', 'connect']);
 gulp.task('deploy', ['scripts', 'sass', 'html', 'extras', 'images', 'gh-pages']);
