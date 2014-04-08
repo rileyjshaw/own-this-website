@@ -83,8 +83,8 @@ gulp.task('watch', function() {
 });
 
 gulp.task('gh-pages', function () {
-  gulp.src("paths.dist.root")
-    .pipe($.ghPages('https://github.com/rileyjshaw/own-this-website.git'));
+  gulp.src(paths.dist.root + '/**/*')
+    .pipe($.ghPages('https://github.com/rileyjshaw/own-this-website.git', 'origin'));
 });
 
 gulp.task('connect', $.connect.server({
