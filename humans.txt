@@ -1,0 +1,18 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Riley J. Shaw -- developer, dreamer -- @rileyjshaw
+
+# THANKS
+
+    Hacker school for giving me the time to make silly things like this
+    and all the amazing people who contributed to the cool open source
+    stuff that I used to build this.
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3, React, Gulp
+    Node, sockjs, Redis
+    GitHub Pages, Mango Smoothies
