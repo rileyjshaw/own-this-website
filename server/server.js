@@ -1,27 +1,43 @@
-var
-io = require('socket.io').listen(8000),
-redis = require('redis'),
-redis_client = redis.createClient(),
-king = {
-  name: 'Nobody',
+var io = require('socket.io').listen(8000);
+var redis = require('redis');
+var redis_client = redis.createClient();
+
+var newConnections = [];
+var king = {
+  name: 'NOBODY',
   score: 0
-},
-officialScoreKeeper = setInterval(function() {
+};
+
+var officialScoreKeeper = setInterval(function() {
   var name = king.name;
-  if (name) {
-    redis_client.zincrby('scores', 1, king.name);
+  var i = newConnections.length;
+
+  // Start a synchronized timer for all the new connections
+  while(i--) {
+    newConnections.pop().emit('updateKingInitial', king);
   }
+
+  // Update the king's score in redis
+  if (name) {
+    redis_client.zincrby('scores', 1, name);
+  }
+
+  // Update the king's score locally
+  king.score++;
+
 }, 1000);
 
 // TODO: set up publish / subscribe
 // https://github.com/mranney/node_redis
 
 redis_client.on("error", function (err) {
-  console.log("Redis error " + err);
+  console.log("Redis error: " + err);
 });
 
-function getHighScores() {
-  return redis_client.zrange('scores', 0, 9, true) // WITHSCORES is true
+function getHighScores(socket) {
+  redis_client.zrevrange(['scores', 0, 9, 'WITHSCORES'], function(err, res) {
+    socket.emit('updateHighScores', res);
+  });
 }
 
 function changeStoredKing(name, score) {
@@ -51,9 +67,12 @@ function setKing(name, socket) {
   }
 }
 
-io.sockets.on('connection', function (socket) {
-  socket.emit('updateKing', king);
-  socket.on('setKing', function (name) {
+io.sockets.on('connection', function(socket) {
+  newConnections.push(socket);
+  socket.on('setKing', function(name) {
     setKing(name, socket);
+  });
+  socket.on('getHighScores', function() {
+    getHighScores(socket);
   });
 });

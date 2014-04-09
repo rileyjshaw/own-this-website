@@ -1,7 +1,6 @@
-var
-React = require('react/addons'),
-Shared = require('./shared.jsx'),
-PageLink = Shared.PageLink;
+var React = require('react/addons');
+var Shared = require('./shared.jsx');
+var PageLink = Shared.PageLink;
 
 // TODO: Make it flat in gulp
 
@@ -11,18 +10,29 @@ var ScoreWindow = React.createClass({
       scores: []
     };
   },
+  updateHighScores: function(scores){
+    var processedScores = [];
+    var i = scores.length;
+    while(i) {
+      processedScores.push({
+        name: scores.shift(),
+        score: scores.shift()
+      });
+      i = i - 2;
+    }
+    this.setState({scores: processedScores});
+  },
   handlePageChange: function(page) {
     this.props.onPageChange(page);
   },
   componentWillMount: function() {
-    this.setState({scores: Server.getHighScores()});
-    var component = this;
-    this.updater = setInterval(function() {
-      component.setState({scores: Server.getHighScores()});
-    }, 3000);
+    this.props.socket.emit('getHighScores');
+  },
+  componentDidMount: function() {
+    this.props.socket.on('updateHighScores', this.updateHighScores);
   },
   componentWillUnmount: function() {
-    clearInterval(this.updater);
+    this.props.socket.removeListener('updateHighScores', this.updateHighScores);
   },
   render: function(){
     return (

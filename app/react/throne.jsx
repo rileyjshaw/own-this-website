@@ -1,42 +1,22 @@
-var
-React = require('react/addons'),
-Shared = require('./shared.jsx'),
-PageLink = Shared.PageLink;
+var React = require('react/addons');
+var Shared = require('./shared.jsx');
+var PageLink = Shared.PageLink;
 
 var Throne = React.createClass({
-  incrementScore: function() {
-    if (this.props.king.name) {
-      this.setState({addedScore: this.state.addedScore + 1});
-    }
-  },
-  getInitialState: function() {
-    return {
-      addedScore: 0
-    };
-  },
   handlePageChange: function(page) {
     this.props.onPageChange(page);
   },
   handleNameSubmit: function(name){
-    if (name !== this.props.king.name) {
+    if (name !== this.props.name) {
       this.props.socket.emit('setKing', name);
     }
-  },
-  componentWillReceiveProps: function(nextProps) {
-    this.setState( {addedScore: 0} );
-  },
-  componentDidMount: function() {
-    this.updater = setInterval(this.incrementScore, 1000);
-  },
-  componentWillUnmount: function() {
-    clearInterval(this.updater);
   },
   render: function() {
     return (
       <div className="throne-page">
         <h1>Owner of this website:</h1>
-        <ThroneMid name={this.props.king.name} onNameSubmit={this.handleNameSubmit} />
-        <p>{+this.props.king.initialScore + this.state.addedScore}s</p>
+        <ThroneMid name={this.props.name} onNameSubmit={this.handleNameSubmit} />
+        <p>{+this.props.initialScore + this.props.secondsElapsed}s</p>
         <PageLink onPageChange={this.handlePageChange} page="scores">High Scores</PageLink>
       </div>
     );
