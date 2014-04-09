@@ -32,13 +32,29 @@ gulp.task('scripts', function() {
   return gulp.src(paths.app.scripts.entry)
     .pipe($.browserify({
       transform: ['reactify'],
-      insertGlobals : false,
-      debug : !$.util.env.production
+      insertGlobals: false,
+      debug: !$.util.env.production
     }))
     .pipe($.rename('all.js'))
     .pipe(gulp.dest(paths.dist.scripts))
     .pipe($.size())
-    .pipe($.connect.reload())
+    // TODO: SO HACK
+    //.pipe($.connect.reload())
+});
+
+//TODO: SO HACK
+gulp.task('deployScripts', function() {
+  process.env.NODE_ENV = 'production';
+  return gulp.src(paths.app.scripts.entry)
+    .pipe($.browserify({
+      transform: ['reactify'],
+      insertGlobals: false,
+      debug: false
+    }))
+    .pipe($.rename('all.js'))
+    .pipe($.uglify())
+    .pipe(gulp.dest(paths.dist.scripts))
+    .pipe($.size())
 });
 
 gulp.task('sass', function () {
@@ -48,28 +64,28 @@ gulp.task('sass', function () {
     .pipe($.minifyCss())
     .pipe(gulp.dest(paths.dist.stylesheets))
     .pipe($.size())
-    .pipe($.connect.reload())
+    //.pipe($.connect.reload())
 });
 
 gulp.task('html', function() {
   return gulp.src('app/**/*.html')
     .pipe(gulp.dest(paths.dist.root))
     .pipe($.size())
-    .pipe($.connect.reload())
+    //.pipe($.connect.reload())
 });
 
 gulp.task('images', function() {
   return gulp.src(paths.app.images)
     .pipe(gulp.dest(paths.dist.images))
     .pipe($.size())
-    .pipe($.connect.reload())
+    //.pipe($.connect.reload())
 });
 
 gulp.task('extras', function() {
   return gulp.src(paths.app.extras)
     .pipe(gulp.dest(paths.dist.root))
     .pipe($.size())
-    .pipe($.connect.reload())
+    //.pipe($.connect.reload())
 });
 
 // gulp.task('clean', function () {
@@ -96,5 +112,5 @@ gulp.task('connect', $.connect.server({
     }
 }));
 
-gulp.task('default', ['scripts', 'sass', 'html', 'extras', 'images', 'watch', 'connect']);
-gulp.task('deploy', ['scripts', 'sass', 'html', 'extras', 'images', 'gh-pages']);
+gulp.task('default', ['deployScripts', 'sass', 'html', 'extras', 'images', 'watch', 'connect']);
+gulp.task('deploy', ['deployScripts', 'sass', 'html', 'extras', 'images', 'gh-pages']);
