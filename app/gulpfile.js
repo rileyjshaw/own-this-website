@@ -5,7 +5,8 @@ paths = {
   app: {
     scripts: {
       all: '{js,react}/**/*.{js,jsx}',
-      entry: 'js/main.jsx'
+      entry: 'js/main.jsx',
+      libs: 'libs/**/*.js'
     },
     stylesheets: 'sass/*.sass',
     images: 'img/**/*',
@@ -29,7 +30,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('scripts', function() {
-  return gulp.src(paths.app.scripts.entry)
+  return gulp.src([paths.app.scripts.libs, paths.app.scripts.entry])
     .pipe($.browserify({
       transform: ['reactify'],
       insertGlobals: false,
@@ -112,5 +113,5 @@ gulp.task('connect', $.connect.server({
     }
 }));
 
-gulp.task('default', ['deployScripts', 'sass', 'html', 'extras', 'images', 'watch', 'connect']);
+gulp.task('default', ['scripts', 'sass', 'html', 'extras', 'images', 'watch', 'connect']);
 gulp.task('deploy', ['deployScripts', 'sass', 'html', 'extras', 'images', 'gh-pages']);
