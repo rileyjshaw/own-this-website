@@ -27,8 +27,10 @@ var UI = React.createClass({
     }).bind(this));
     this.socket.on('updateKingInitial', (function (king) {
       this.setState({kingName: king.name, kingScore: king.score, secondsElapsed: 0});
-      setInterval(this.tick, 1000);
-      this.tick();
+      if(!this.timer) {
+        this.timer = setInterval(this.tick, 1000);
+        this.tick();
+      }
     }).bind(this));
   },
   render: function() {
