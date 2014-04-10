@@ -8,14 +8,12 @@ var Page = React.createClass({
     return (
       this.props.key === 'throne'
         ? <Throne
-            url={this.props.url}
             onPageChange={this.props.onPageChange}
             name={this.props.name}
             initialScore={this.props.pageSpecificScore}
             socket={this.props.socket}
             secondsElapsed={this.props.secondsElapsed} />
         : <HighScores
-            url={this.props.url}
             onPageChange={this.props.onPageChange}
             name={this.props.name}
             scores={this.props.pageSpecificScore}
