@@ -16,7 +16,7 @@ var Throne = React.createClass({
       <div className="throne-page">
         <h1>Owner of this website:</h1>
         <ThroneMid name={this.props.name} onNameSubmit={this.handleNameSubmit} />
-        <p>{this.props.initialScore + this.props.secondsElapsed}s</p>
+        <p>{+this.props.initialScore + this.props.secondsElapsed}s</p>
         <PageLink onPageChange={this.handlePageChange} page="scores">High Scores</PageLink>
       </div>
     );
