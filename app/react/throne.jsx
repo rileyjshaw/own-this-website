@@ -38,7 +38,7 @@ var ThroneMid = React.createClass({
     return (
       <div className="mid">
         { this.state.formVisible
-          ? <ChallengerForm onNameSubmit={this.handleNameSubmit} ref="input" />
+          ? <ChallengerForm onNameSubmit={this.handleNameSubmit} onBlur={this.toggleFormDisplay} ref="input" />
           : <h2 onClick={this.toggleFormDisplay}>{this.props.name}</h2>
         }
       </div>
