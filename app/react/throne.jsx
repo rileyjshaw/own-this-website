@@ -38,7 +38,7 @@ var ThroneMid = React.createClass({
     return (
       <div className="mid">
         { this.state.formVisible
-          ? <ChallengerForm onNameSubmit={this.handleNameSubmit} onBlur={this.toggleFormDisplay} ref="input" />
+          ? <ChallengerForm onNameSubmit={this.handleNameSubmit} handleBlur={this.toggleFormDisplay} ref="input" />
           : <h2 onClick={this.toggleFormDisplay}>{this.props.name}</h2>
         }
       </div>
@@ -64,7 +64,7 @@ var ChallengerForm = React.createClass({
 
     return (
       <form className="challengerForm" onSubmit={this.handleNameSubmit} >
-        <input type="text" placeholder="Take it over" ref="challenger" />
+        <input type="text" placeholder="Take it over" ref="challenger" onBlur={this.props.handleBlur} />
         <button type="submit" value="Go"><img src="img/crown.svg" alt="Crown" /></button>
       </form>
     );
