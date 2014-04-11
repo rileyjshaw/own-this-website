@@ -47,15 +47,8 @@ var ThroneMid = React.createClass({
 });
 
 var ChallengerForm = React.createClass({
-  handleNameSubmit: function() {
-    var challengerNode = this.refs.challenger.getDOMNode();
-    var challenger = challengerNode.value.trim();
-    if (!challenger) {
-      return false;
-    }
-    this.props.onNameSubmit(challenger);
-    this.refs.challenger.getDOMNode().value = '';
-    return false;
+  getInitialState: function() {
+    return {value: ''};
   },
   componentDidMount: function() {
     key.setScope('input');
@@ -73,11 +66,24 @@ var ChallengerForm = React.createClass({
     };
     key.unbind('esc', this.props.handleBlur);
   },
+  handleChange: function(event) {
+    this.setState({value: event.target.value.substr(0, 12)});
+  },
+  handleNameSubmit: function() {
+    var challengerNode = this.refs.challenger.getDOMNode();
+    var challenger = challengerNode.value.trim();
+    if (!challenger) {
+      return false;
+    }
+    this.props.onNameSubmit(challenger);
+    this.refs.challenger.getDOMNode().value = '';
+    return false;
+  },
   render: function() {
 
     return (
       <form className="challengerForm" onSubmit={this.handleNameSubmit} >
-        <input type="text" placeholder="Take it over" ref="challenger" onBlur={this.props.handleBlur} />
+        <input type="text" placeholder="Take it over" ref="challenger" value={this.state.value} onBlur={this.props.handleBlur} onChange={this.handleChange} />
         <button type="submit" value="Go"><img src="img/crown.svg" alt="Crown" /></button>
       </form>
     );
