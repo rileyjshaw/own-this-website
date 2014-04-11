@@ -1,0 +1,27 @@
+{
+  "name": "own-this-website",
+  "version": "0.0.2",
+  "homepage": "https://github.com/rileyjshaw/own-this-website",
+  "authors": [
+    "Riley Shaw <rileyjshaw@gmail.com>"
+  ],
+  "description": "An experimental, King of the Hill style game",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "game",
+    "sockets",
+    "king",
+    "of",
+    "the",
+    "hill",
+    "own"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "keymaster": "~1.6.2",
+    "socket.io-client": "~0.9.16"
+  }
+}
