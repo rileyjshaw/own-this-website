@@ -8,7 +8,8 @@ var paths = {
       // bower components pulled in with usemin
     },
     stylesheets: 'sass/*.sass',
-    images: 'img/**/*',
+    images: 'img/**/*.{gif, png, jpg}',
+    svgs: 'img/**/*.svg',
     extras: ['*.{png,ico,txt,xml}', '404.html', 'CNAME'],
     temp: 'temp'
   },
@@ -21,9 +22,6 @@ var paths = {
   },
   tests: '../tests'
 };
-
-// TODO: Add imageoptim for /img and favicons
-// TODO: Copy favicons
 
 gulp.task('build_app', function() {
   process.env.NODE_ENV = 'production';
@@ -75,8 +73,17 @@ gulp.task('html', ['scripts'], function() {
     .pipe($.connect.reload())
 });
 
-gulp.task('images', function() {
+gulp.task('images', [], function() {
   return gulp.src(paths.app.images)
+    .pipe($.imagemin())
+    .pipe(gulp.dest(paths.dist.images))
+    .pipe($.size())
+    .pipe($.connect.reload())
+});
+
+gulp.task('svgs', [], function() {
+  return gulp.src(paths.app.svgs)
+    .pipe($.svgmin())
     .pipe(gulp.dest(paths.dist.images))
     .pipe($.size())
     .pipe($.connect.reload())
@@ -84,12 +91,13 @@ gulp.task('images', function() {
 
 gulp.task('extras', function() {
   return gulp.src(paths.app.extras)
+    .pipe($.imagemin())
     .pipe(gulp.dest(paths.dist.root))
     .pipe($.size())
     .pipe($.connect.reload())
 });
 
-gulp.task('clean_temp', ['scripts', 'html'], function () {
+gulp.task('clean_temp', ['scripts', 'html', 'images', 'svgs'], function () {
   return gulp.src(paths.app.temp, {read: false})
     .pipe($.clean());
 });
@@ -115,7 +123,7 @@ gulp.task('connect', ['default'], $.connect.server({
 }));
 
 gulp.task('scripts', ['build_app', 'usemin', 'js_concat']);
-gulp.task('default', ['scripts', 'sass', 'html', 'extras', 'images', 'clean_temp']);
+gulp.task('default', ['scripts', 'sass', 'html', 'extras', 'images', 'svgs', 'clean_temp']);
 
 // These are the ones you'll want to call.
 //
