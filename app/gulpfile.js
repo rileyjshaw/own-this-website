@@ -36,7 +36,6 @@ gulp.task('build_app', function() {
     .pipe($.rename('app.js'))
     .pipe(gulp.dest(paths.app.temp))
     .pipe($.size())
-    // TODO: Reconnect autoreload
     .pipe($.connect.reload())
 });
 
