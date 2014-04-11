@@ -20,7 +20,7 @@ var UI = React.createClass({
     this.setState({ page: page });
   },
   componentDidMount: function() {
-    this.socket = io.connect(this.props.url + ':8000');
+    this.socket = io.connect(this.props.url + this.props.socketPort);
     this.socket.on('news', alert);
     this.socket.on('updateKing', (function (king) {
       this.setState({kingName: king.name, kingScore: +king.score, secondsElapsed: 0});
