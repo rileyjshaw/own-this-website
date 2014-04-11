@@ -24,7 +24,7 @@ If you want to keep the app running after you've logged off, check out [forever]
 Right now, node is listening on port `8000` and redis is on port `6379`.
 
 ### App
-*These instructions assume that you'll use gh-pages as a CDN, but really the `dist` folder can be served from anywhere!*
+*These instructions assume that you'll use gh-pages as a CDN, but the* `dist` *folder can be served from anywhere*
 
 Open `app/react/main.jsx` and change `107.170.85.185` to point to your own server. You can also change the port (you shouldn't need to).
 
@@ -34,13 +34,17 @@ Open `app/CNAME` and change `own.rileyjshaw.com` to your own domain. These are a
 
 In `app`, run
 ```
-npm install && gulp watch
+npm install
+bower install
+gulp watch
 ```
 
-This should generate a `dist` folder and open the app in your browser! If it's working, hit `ctrl` + `c` to stop the watch task and enter
+This should generate a `dist` folder and open the app in your browser. If it's working, hit `ctrl` + `c` to stop the watch task, then
 ```
 gulp deploy
 ```
+
+You're good to go!
 
 #### Gulp tasks
 `gulp watch`: Standard build tasks + watch + autoreload; use during development.
