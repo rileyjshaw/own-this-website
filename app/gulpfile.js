@@ -65,7 +65,7 @@ gulp.task('sass', function () {
 });
 
 gulp.task('html', ['scripts'], function() {
-  return gulp.src(paths.app.temp + '/*')
+  return gulp.src(paths.app.temp + '/*.html')
     .pipe($.minifyHtml({empty: true}))
     .pipe(gulp.dest(paths.dist.root))
     .pipe($.size())

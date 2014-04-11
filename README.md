@@ -19,7 +19,7 @@ node server.js
 ```
 
 ### App
-In `/app`, open `react/main.jsx` and change `SERVER-URL-HERE` in
+In `/app`, open `react/main.jsx` and change `107.170.85.185` in
 ```
 React.renderComponent(
   <UI url="SERVER-URL-HERE" />,
@@ -34,6 +34,11 @@ npm install && gulp build
 ```
 
 This should generate a `/dist` folder of static assets that you can serve from gh-pages, a CDN, or your node server.
+
+#### Gulp tasks
+`gulp watch`: Standard build tasks + watch + autoreload; use during development.
+`gulp deploy`: Standard build tasks + push to gh-pages; use to push static files to production.
+`gulp clean_dist`: Flushes your `dist` directory in case it gets messy.
 
 ## Issues?
 [Let me know!](https://github.com/rileyjshaw/own-this-website/issues)

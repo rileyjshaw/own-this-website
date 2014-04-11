@@ -58,7 +58,20 @@ var ChallengerForm = React.createClass({
     return false;
   },
   componentDidMount: function() {
+    key.setScope('input');
+    key.filter = function filter(event){
+      return true;
+    };
+    key('esc', this.props.handleBlur);
     this.refs.challenger.getDOMNode().focus();
+  },
+  componentWillUnmount: function() {
+    key.setScope('all');
+    key.filter = function filter(event){
+      var tagName = (event.target || event.srcElement).tagName;
+      return !(tagName == 'INPUT' || tagName == 'SELECT' || tagName == 'TEXTAREA');
+    };
+    key.unbind('esc', this.props.handleBlur);
   },
   render: function() {
 
