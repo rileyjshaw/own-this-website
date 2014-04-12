@@ -1,6 +1,6 @@
 {
-  "name": "own-this-website",
-  "version": "0.1.0",
+  "name": "own-this-website-server",
+  "version": "1.0.0",
   "description": "An online game of yourface of the hill",
   "main": "server.js",
   "scripts": {
