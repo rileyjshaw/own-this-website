@@ -19344,7 +19344,7 @@ var ThroneMid = React.createClass({displayName: 'ThroneMid',
       if(!element.contains(document.activeElement)) {
         this.toggleFormDisplay();
       }
-    }, 1).bind(this);
+    }.bind(this), 1);
   },
   toggleFormDisplay: function() {
     this.setState({ formVisible: 1 - this.state.formVisible });
