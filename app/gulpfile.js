@@ -49,7 +49,7 @@ gulp.task('usemin', function() {
 gulp.task('js_concat', ['build_app', 'usemin'], function() {
   return gulp.src([paths.app.temp + '/js/*.js', paths.app.temp + '/*.js'])
     .pipe($.concat('all.js'))
-//    .pipe($.uglify())
+    .pipe($.uglify())
     .pipe(gulp.dest(paths.dist.scripts))
     .pipe($.size())
 });
