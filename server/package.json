@@ -1,14 +1,14 @@
 {
   "name": "own-this-website",
   "version": "0.1.0",
-  "description": "An online game of ruler of the hill",
+  "description": "An online game of yourface of the hill",
   "main": "server.js",
   "scripts": {
     "test": "gulp test"
   },
   "repository": "https://github.com/rileyjshaw/own-this-website.git",
   "keywords": [
-    "ruler, hill, own, this, website, high, score, game"
+    "yourface, hill, own, this, website, high, score, game"
   ],
   "author": "rileyjshaw",
   "license": "BSD-2-Clause",

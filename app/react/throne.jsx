@@ -9,7 +9,7 @@ var Throne = React.createClass({
   handleNameSubmit: function(name){
     name = name.toUpperCase();
     if (name !== this.props.name) {
-      this.props.socket.emit('setRuler', name);
+      this.props.socket.emit('setYourFace', name);
     }
   },
   render: function() {

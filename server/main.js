@@ -6,27 +6,27 @@ var newConnections = [];
 var ipSpamChecker = {};
 var socketSpamChecker = {};
 
-var ruler = {
+var yourface = {
   name: 'NOBODY',
   score: 0
 };
 
 var officialScoreKeeper = setInterval(function() {
-  var name = ruler.name;
+  var name = yourface.name;
   var i = newConnections.length;
 
   // Start a synchronized timer for all the new connections
   while(i--) {
-    newConnections.pop().emit('updateRulerInitial', ruler);
+    newConnections.pop().emit('updateYourFaceInitial', yourface);
   }
 
-  // Update the ruler's score in redis
+  // Update the yourface's score in redis
   if (name) {
     redis_client.zincrby('scores', 1, name);
   }
 
-  // Update the ruler's score locally
-  ruler.score++;
+  // Update the yourface's score locally
+  yourface.score++;
 
   // Clear the spam checker
   ipSpamChecker = {};
@@ -45,15 +45,15 @@ function getHighScores(socket) {
   });
 }
 
-function changeStoredRuler(name, score) {
-  ruler = {
+function changeStoredYourFace(name, score) {
+  yourface = {
     name: name,
     score: score
   };
-  io.sockets.emit('updateRuler', ruler);
+  io.sockets.emit('updateYourFace', yourface);
 }
 
-function setRuler(name, socket) {
+function setYourFace(name, socket) {
   var score;
   var ipSpamCount = ipSpamChecker[socket.ipAddress];
   var socketSpamCount = socketSpamChecker[socket.id];
@@ -85,16 +85,16 @@ function setRuler(name, socket) {
   } else ++ipSpamChecker[socket.ipAddress];
 
   if(typeof name === 'string' && name === name.toUpperCase()) {
-    if(name !== ruler.name) {
+    if(name !== yourface.name) {
       redis_client.zscore('scores', name, function(err, res) {
         if (res === null) {
           redis_client.zadd('scores', 0, name);
           res = 0;
         }
-        changeStoredRuler(name, res);
+        changeStoredYourFace(name, res);
       });
     } else {
-      socket.emit('news', 'You\'re already the ruler. Chill out!');
+      socket.emit('news', 'You\'re already the yourface. Chill out!');
     }
   } else {
     socket.emit('news', 'Your name should be an uppercase string, sneakypants.');
@@ -104,8 +104,8 @@ function setRuler(name, socket) {
 io.sockets.on('connection', function(socket) {
   socket.ipAddress = socket.handshake.address.address + ':' + socket.handshake.address.port;
   newConnections.push(socket);
-  socket.on('setRuler', function(name) {
-    setRuler(name, socket);
+  socket.on('setYourFace', function(name) {
+    setYourFace(name, socket);
   });
   socket.on('getHighScores', function() {
     getHighScores(socket);

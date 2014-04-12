@@ -1,6 +1,6 @@
 own-this-website
 ================
-Own This Website is an overengineered, experimental Ruler of the Hill style game where players add their name to the front-page of a website.
+Own This Website is an overengineered, experimental YourFace of the Hill style game where players add their name to the front-page of a website.
 
 ## Installation
 The app is separated into two parts: a static `app` folder that can be served from gh-pages or a CDN, and a super-simple `server` folder for serving and storing player scores.
@@ -42,7 +42,7 @@ bower install
 gulp watch
 ```
 
-This should generate a `dist` folder and open the app in your browser. If it's worruler, hit `ctrl` + `c` to stop the watch task, then
+This should generate a `dist` folder and open the app in your browser. If it's woryourface, hit `ctrl` + `c` to stop the watch task, then
 ```
 gulp deploy
 ```
