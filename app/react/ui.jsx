@@ -7,8 +7,8 @@ var UI = React.createClass({
   getInitialState: function() {
     return {
       page: 'throne',
-      kingName: '',
-      kingScore: 0,
+      rulerName: '',
+      rulerScore: 0,
       scores: [1, 2, 3],
       secondsElapsed: 0
     };
@@ -25,11 +25,11 @@ var UI = React.createClass({
       this.socket.on('news', function(data) {
         console.log(data);
       });
-      this.socket.on('updateKing', (function (king) {
-        this.setState({kingName: king.name, kingScore: +king.score, secondsElapsed: 0});
+      this.socket.on('updateRuler', (function (ruler) {
+        this.setState({rulerName: ruler.name, rulerScore: +ruler.score, secondsElapsed: 0});
       }).bind(this));
-      this.socket.on('updateKingInitial', (function (king) {
-        this.setState({kingName: king.name, kingScore: king.score, secondsElapsed: 0});
+      this.socket.on('updateRulerInitial', (function (ruler) {
+        this.setState({rulerName: ruler.name, rulerScore: ruler.score, secondsElapsed: 0});
         if(!this.timer) {
           this.timer = setInterval(this.tick, 1000);
           this.tick();
@@ -43,9 +43,9 @@ var UI = React.createClass({
   render: function() {
     return (
       <ReactCSSTransitionGroup transitionName="window" component={React.DOM.div}>
-        <Page key={this.state.page} onPageChange={this.handlePageChange} socket={this.socket} secondsElapsed={this.state.secondsElapsed} name={this.state.kingName}
+        <Page key={this.state.page} onPageChange={this.handlePageChange} socket={this.socket} secondsElapsed={this.state.secondsElapsed} name={this.state.rulerName}
           pageSpecificScore={ this.state.page === 'throne'
-                      ? this.state.kingScore
+                      ? this.state.rulerScore
                       : this.state.scores
           }
         />
