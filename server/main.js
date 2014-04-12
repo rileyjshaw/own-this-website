@@ -84,19 +84,20 @@ function setKing(name, socket) {
     }
   } else ++ipSpamChecker[socket.ipAddress];
 
-  if(typeof name === 'string') {
-    name = name.toUpperCase();
-
-    redis_client.zscore('scores', name, function(err, res) {
-      if (res === null) {
-        redis_client.zadd('scores', 0, name);
-        res = 0;
-      }
-      changeStoredKing(name, res);
-    });
-
+  if(typeof name === 'string' && name === name.toUpperCase()) {
+    if(name !== king.name) {
+      redis_client.zscore('scores', name, function(err, res) {
+        if (res === null) {
+          redis_client.zadd('scores', 0, name);
+          res = 0;
+        }
+        changeStoredKing(name, res);
+      });
+    } else {
+      socket.emit('news', 'You\'re already the king. Chill out!');
+    }
   } else {
-    socket.emit('news', 'Your name should be a string, sneakypants.');
+    socket.emit('news', 'Your name should be an uppercase string, sneakypants.');
   }
 }
 

@@ -7,6 +7,7 @@ var Throne = React.createClass({
     this.props.onPageChange(page);
   },
   handleNameSubmit: function(name){
+    name = name.toUpperCase();
     if (name !== this.props.name) {
       this.props.socket.emit('setKing', name);
     }
@@ -24,12 +25,12 @@ var Throne = React.createClass({
 });
 
 var ThroneMid = React.createClass({
+  getInitialState: function() {
+    return { formVisible: 0 };
+  },
   handleNameSubmit: function(name) {
     this.toggleFormDisplay();
     this.props.onNameSubmit(name);
-  },
-  getInitialState: function() {
-    return { formVisible: 0 };
   },
   toggleFormDisplay: function() {
     this.setState({ formVisible: 1 - this.state.formVisible });
@@ -38,7 +39,7 @@ var ThroneMid = React.createClass({
     return (
       <div className="mid">
         { this.state.formVisible
-          ? <ChallengerForm onNameSubmit={this.handleNameSubmit} handleBlur={this.toggleFormDisplay} ref="input" />
+          ? <ChallengerForm onNameSubmit={this.handleNameSubmit} handleBlur={this.toggleFormDisplay} />
           : <h2 onClick={this.toggleFormDisplay}>{this.props.name}</h2>
         }
       </div>
@@ -72,7 +73,7 @@ var ChallengerForm = React.createClass({
   handleNameSubmit: function() {
     var challengerNode = this.refs.challenger.getDOMNode();
     var challenger = challengerNode.value.trim();
-    if (!challenger) {
+    if (!challenger || typeof challenger !== 'string') {
       return false;
     }
     this.props.onNameSubmit(challenger);
