@@ -86,12 +86,16 @@ function setKing(name, socket) {
 
   if(typeof name !== 'string') {
     socket.emit('news', 'Your name should be a string, sneakypants.');
+    socket.superStrikes++;
   } else if(name.length > 12) {
     socket.emit('news', 'Your name can\'t be more than 12 characters, greedyguts.');
+    socket.superStrikes++;
   } else if(name !== name.toUpperCase()) {
     socket.emit('news', 'How did those lowercases get in there? Something\'s fishy...');
+    socket.superStrikes++;
   } else if(name === king.name) {
     socket.emit('news', 'You\'re already the king. Chill out!');
+    socket.superStrikes += 0.2;
   } else {
     redis_client.zscore('scores', name, function(err, res) {
       if (res === null) {
@@ -101,10 +105,15 @@ function setKing(name, socket) {
       changeStoredKing(name, res);
     });
   }
+
+  if(socket.superStrikes >= 3) {
+    socket.disconnect();
+  }
 }
 
 io.sockets.on('connection', function(socket) {
-  socket.ipAddress = socket.handshake.address.address + ':' + socket.handshake.address.port;
+  socket.superStrikes = 0;
+  socket.ipAddress = socket.handshake.address.address;
   newConnections.push(socket);
   socket.on('setKing', function(name) {
     setKing(name, socket);
