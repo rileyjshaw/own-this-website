@@ -30,7 +30,6 @@ In `app/react/main.jsx`,
 
 1. Change `own.rileyjshaw.com` to point to wherever your static content is being served from. This is the location that your browser will show in the address bar.
 2. Change `toyserver.rileyjshaw.com` to point to your socket server.
-3. You can change the port, but you shouldn't need to.
 
 Open `app/react/gulpfile.js` and change `https://github.com/rileyjshaw/own-this-website.git` to point to your own repository.
 
@@ -51,9 +50,10 @@ gulp deploy
 You're good to go!
 
 #### Gulp tasks
-`gulp watch`: Standard build tasks + watch + autoreload; use during development.
-`gulp deploy`: Standard build tasks + push to gh-pages; use to push static files to production.
-`gulp clean_dist`: Flushes your `dist` directory in case it gets messy.
+
++ `gulp watch`: Standard build tasks + watch + autoreload; use during development.
++ `gulp deploy`: Standard build tasks + push to gh-pages; use to push static files to production.
++ `gulp clean_dist`: Flushes your `dist` directory in case it gets messy.
 
 ## Issues?
 [Let me know!](https://github.com/rileyjshaw/own-this-website/issues)
