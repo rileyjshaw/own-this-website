@@ -20,20 +20,25 @@ var UI = React.createClass({
     this.setState({ page: page });
   },
   componentDidMount: function() {
-    this.socket = io.connect(this.props.url + this.props.socketPort);
-    this.socket.on('news', function(data) {
-      console.log(data);
-    });
-    this.socket.on('updateKing', (function (king) {
-      this.setState({kingName: king.name, kingScore: +king.score, secondsElapsed: 0});
-    }).bind(this));
-    this.socket.on('updateKingInitial', (function (king) {
-      this.setState({kingName: king.name, kingScore: king.score, secondsElapsed: 0});
-      if(!this.timer) {
-        this.timer = setInterval(this.tick, 1000);
-        this.tick();
-      }
-    }).bind(this));
+    if(window.location.hostname === this.props.cdnUrl) {
+      this.socket = io.connect(this.props.socketUrl + this.props.socketPort);
+      this.socket.on('news', function(data) {
+        console.log(data);
+      });
+      this.socket.on('updateKing', (function (king) {
+        this.setState({kingName: king.name, kingScore: +king.score, secondsElapsed: 0});
+      }).bind(this));
+      this.socket.on('updateKingInitial', (function (king) {
+        this.setState({kingName: king.name, kingScore: king.score, secondsElapsed: 0});
+        if(!this.timer) {
+          this.timer = setInterval(this.tick, 1000);
+          this.tick();
+        }
+      }).bind(this));
+    } else {
+      console.log('window.location.hostname is ' + window.location.hostname + ' but I was expecting for it to be ' + this.props.cdnUrl + '.');
+      console.log('Change the value of cdnUrl in /app/js/main.jsx to the correct hostname.');
+    }
   },
   render: function() {
     return (

@@ -26,7 +26,10 @@ Right now, node is listening on port `8000` and redis is on port `6379`.
 ### App
 *These instructions assume that you'll use gh-pages as a CDN, but the* `dist` *folder can be served from anywhere*
 
-Open `app/react/main.jsx` and change `107.170.85.185` to point to your own server. You can also change the port (you shouldn't need to).
+In `app/react/main.jsx`,
+1. Change `own.rileyjshaw.com` to point to wherever your static content is being served from. This is the location that your browser will show in the address bar.
+2. Change `toyserver.rileyjshaw.com` to point to your socket server.
+3. You can change the port, but you shouldn't need to.
 
 Open `app/react/gulpfile.js` and change `https://github.com/rileyjshaw/own-this-website.git` to point to your own repository.
 
