@@ -5,7 +5,7 @@ var paths = {
     scripts: {
       all: '{js,react}/**/*.{js,jsx}',
       entry: 'js/main.jsx'
-      // bower components pulled in with usemin
+      //bower components pulled in with usemin
     },
     stylesheets: 'sass/*.sass',
     images: 'img/**/*.{gif, png, jpg}',
@@ -14,7 +14,7 @@ var paths = {
     temp: 'temp'
   },
   dist: {
-    // BE VERY CAREFUL CHANGING ROOT VALUE (see clean_dist task)
+    //BE VERY CAREFUL CHANGING ROOT VALUE (see clean_dist task)
     root: '../dist',
     scripts: '../dist/js',
     stylesheets: '../dist/css',
@@ -49,7 +49,7 @@ gulp.task('usemin', function() {
 gulp.task('js_concat', ['build_app', 'usemin'], function() {
   return gulp.src([paths.app.temp + '/js/*.js', paths.app.temp + '/*.js'])
     .pipe($.concat('all.js'))
-    .pipe($.uglify())
+//    .pipe($.uglify())
     .pipe(gulp.dest(paths.dist.scripts))
     .pipe($.size())
 });

@@ -32,6 +32,16 @@ var ThroneMid = React.createClass({
     this.toggleFormDisplay();
     this.props.onNameSubmit(name);
   },
+  handleBlur: function(element) {
+    //jumping through hoops because blur event might trigger
+    //before submit, which kills the form when the submit
+    //button is clicked
+    setTimeout(function() {
+      if(!element.contains(document.activeElement)) {
+        this.toggleFormDisplay();
+      }
+    }.bind(this), 1);
+  },
   toggleFormDisplay: function() {
     this.setState({ formVisible: 1 - this.state.formVisible });
   },
@@ -39,7 +49,7 @@ var ThroneMid = React.createClass({
     return (
       <div className="mid">
         { this.state.formVisible
-          ? <ChallengerForm onNameSubmit={this.handleNameSubmit} handleBlur={this.toggleFormDisplay} />
+          ? <ChallengerForm onNameSubmit={this.handleNameSubmit} handleBlur={this.handleBlur} />
           : <h2 onClick={this.toggleFormDisplay}>{this.props.name}</h2>
         }
       </div>
@@ -67,6 +77,10 @@ var ChallengerForm = React.createClass({
     };
     key.unbind('esc', this.props.handleBlur);
   },
+  handleBlur: function() {
+    //jumping through hoops (part 2)
+    this.props.handleBlur(this.refs.form.getDOMNode());
+  },
   handleChange: function(event) {
     this.setState({value: event.target.value.substr(0, 12)});
   },
@@ -83,9 +97,11 @@ var ChallengerForm = React.createClass({
   render: function() {
 
     return (
-      <form className="challengerForm" onSubmit={this.handleNameSubmit} >
-        <input type="text" placeholder="Take it over" ref="challenger" value={this.state.value} onBlur={this.props.handleBlur} onChange={this.handleChange} />
-        <button type="submit" value="Go"><img src="img/crown.svg" alt="Crown" /></button>
+      <form className="challengerForm" onBlur={this.handleBlur} onSubmit={this.handleNameSubmit} ref="form" >
+        <input type="text" placeholder="Take it over" ref="challenger" value={this.state.value} onChange={this.handleChange} />
+        <button type="submit" value="Go" >
+          <img src="img/crown.svg" alt="Crown" />
+        </button>
       </form>
     );
   }
