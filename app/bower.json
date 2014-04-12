@@ -5,14 +5,14 @@
   "authors": [
     "Riley Shaw <rileyjshaw@gmail.com>"
   ],
-  "description": "An experimental, King of the Hill style game",
+  "description": "An experimental, YourFace of the Hill style game",
   "moduleType": [
     "node"
   ],
   "keywords": [
     "game",
     "sockets",
-    "king",
+    "yourface",
     "of",
     "the",
     "hill",
