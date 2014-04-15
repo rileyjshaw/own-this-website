@@ -78,7 +78,7 @@ function setKing(name, socket) {
     ipSpamChecker[socket.ipAddress] = 1;
   } else if(++ipSpamCount > 400) {
     if(socket.ipWarningFlag) {
-      socket.emit('news', 'There\'s too much traffic from your network; refresh to reconnect!');
+      socket.emit('news', 'There\'s too much traffic from your network. Try not to ruin the game for everyone, refresh to reconnect.');
       socket.disconnect();
     } else {
       socket.ipWarningFlag = 1;
@@ -109,6 +109,7 @@ function setKing(name, socket) {
   }
 
   if(socket.superStrikes >= 3) {
+    socket.emit('news', 'Okay, I get it, you\'re 1337. Try not to ruin the game for everyone, refresh to reconnect.');
     socket.disconnect();
   }
 }
