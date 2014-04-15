@@ -21,9 +21,9 @@ var UI = React.createClass({
   },
   componentDidMount: function() {
     if(window.location.hostname === this.props.cdnUrl) {
-      this.socket = io.connect(this.props.socketUrl + this.props.socketPort);
-      this.socket.on('news', function(data) {
-        console.log(data);
+      this.socket = io.connect('http://' + this.props.socketUrl + ':' + this.props.socketPort);
+      this.socket.on('news', function(message) {
+        console.log(message);
       });
       this.socket.on('updateKing', (function (king) {
         this.setState({kingName: king.name, kingScore: +king.score, secondsElapsed: 0});
@@ -36,8 +36,9 @@ var UI = React.createClass({
         }
       }).bind(this));
     } else {
-      console.log('window.location.hostname is ' + window.location.hostname + ' but I was expecting for it to be ' + this.props.cdnUrl + '.');
-      console.log('Change the value of cdnUrl in /app/js/main.jsx to the correct hostname.');
+      throw new Error('window.location.hostname is ' + window.location.hostname +
+        ' but we were expecting for it to be ' + this.props.cdnUrl +
+        '. Change the value of cdnUrl in /app/js/main.jsx to the correct hostname.');
     }
   },
   render: function() {

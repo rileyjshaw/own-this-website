@@ -2,7 +2,7 @@
   "name": "own-this-website-server",
   "version": "1.0.1",
   "description": "An online game of king of the hill",
-  "main": "server.js",
+  "main": "main.js",
   "scripts": {
     "test": "gulp test"
   },
@@ -13,7 +13,6 @@
   "author": "rileyjshaw",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "connect": "~2.14.3",
     "socket.io": "~0.9.16",
     "redis": "~0.10.1"
   }

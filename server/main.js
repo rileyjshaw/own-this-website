@@ -1,3 +1,5 @@
+// run on server with:
+// "forever start -a --spinSleepTime 10000 -l ~/own-this-website-personal/logs/forever_log.txt -o ~/own-this-website-personal/logs/nodemon_log.txt -e ~/own-this-website-personal/logs/error_log.txt /usr/local/bin/nodemon ~/own-this-website-personal/main.js --exitcrash"
 var io = require('socket.io').listen(8000);
 var redis = require('redis');
 var redis_client = redis.createClient();
@@ -95,7 +97,7 @@ function setKing(name, socket) {
     socket.superStrikes++;
   } else if(name === king.name) {
     socket.emit('news', 'You\'re already the king. Chill out!');
-    socket.superStrikes += 0.2;
+    socket.superStrikes += 0.5;
   } else {
     redis_client.zscore('scores', name, function(err, res) {
       if (res === null) {
