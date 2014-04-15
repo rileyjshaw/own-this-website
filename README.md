@@ -1,6 +1,6 @@
 own-this-website
 ================
-Own This Website is an overengineered, experimental King of the Hill style game where players add their name to the front-page of a website. [The demo lives here](own.rileyjshaw.com).
+Own This Website is an overengineered, experimental King of the Hill style game where players add their name to the front-page of a website. [The demo lives here](http://own.rileyjshaw.com).
 
 ## Installation
 The app is separated into two parts: a static `app` folder that can be served from gh-pages or a CDN, and a super-simple `server` folder for serving and storing player scores.
