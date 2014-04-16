@@ -48,8 +48,7 @@ var paths = {
     scripts: '../dist/js',
     stylesheets: '../dist/css',
     images: '../dist/img'
-  },
-  tests: '../tests'
+  }
 };
 
 gulp.task('build_app', function() {
@@ -173,6 +172,5 @@ gulp.task('clean_dist', function () {
   return gulp.src(paths.dist.root, {read: false})
     .pipe($.clean({force: true})); // !!!
 });
-gulp.task('test', ['default']);
 gulp.task('watch', ['default', 'watch_files', 'connect']);
 gulp.task('deploy', ['default', 'gh_pages']);
