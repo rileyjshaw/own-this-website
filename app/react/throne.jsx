@@ -42,6 +42,10 @@ var ThroneMid = React.createClass({
       }
     }.bind(this), 1);
   },
+  handleTouchSubmit: function() {
+    //unfortunate hack
+    setTimeout(this.toggleFormDisplay, 1000);
+  },
   toggleFormDisplay: function() {
     this.setState({ formVisible: 1 - this.state.formVisible });
   },
@@ -49,7 +53,7 @@ var ThroneMid = React.createClass({
     return (
       <div className="mid">
         { this.state.formVisible
-          ? <ChallengerForm onNameSubmit={this.handleNameSubmit} handleBlur={this.handleBlur} />
+          ? <ChallengerForm onNameSubmit={this.handleNameSubmit} handleBlur={this.handleBlur} handleTouchSubmit={this.handleTouchSubmit} />
           : <h2 onClick={this.toggleFormDisplay}>{this.props.name}</h2>
         }
       </div>
@@ -60,6 +64,9 @@ var ThroneMid = React.createClass({
 var ChallengerForm = React.createClass({
   getInitialState: function() {
     return {value: ''};
+  },
+  componentWillMount: function() {
+    React.initializeTouchEvents(true);
   },
   componentDidMount: function() {
     key.setScope('input');
@@ -99,7 +106,7 @@ var ChallengerForm = React.createClass({
     return (
       <form className="challengerForm" onBlur={this.handleBlur} onSubmit={this.handleNameSubmit} ref="form" >
         <input type="text" placeholder="Take it over" ref="challenger" value={this.state.value} onChange={this.handleChange} />
-        <button type="submit" value="Go" >
+        <button type="submit" value="Go" onTouchStart={this.props.handleTouchSubmit} >
           <img src="img/crown.svg" alt="Crown" />
         </button>
       </form>
