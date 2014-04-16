@@ -54,6 +54,15 @@ You're good to go!
 + `gulp deploy`: Standard build tasks + push to gh-pages; use to push static files to production.
 + `gulp clean_dist`: Flushes your `dist` directory in case it gets messy.
 
+#### Gulp flags
+
++ `--dev`: Skips minification, keeps reactify debug on, and switches everything to run on `localhost`
++ `--cdn={CDN}`: Overrides your CDN url
++ `--url={SERVER}`: Overrides your node server url
++ `--cdn={PORT}`: Overrides your node server port
+
+`cdn`, `url`, and `port` can also be passed in as unnamed arguments in the order `[cdn, url, port]`.
+
 ### Testing
 
 Testing is done with [mocha](http://visionmedia.github.io/mocha/) and [should](https://github.com/visionmedia/should.js/). To get set up, all you need to do is:
