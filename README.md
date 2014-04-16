@@ -15,6 +15,7 @@ npm install
 
 To start the app, run
 ```
+redis-server
 node main.js
 ```
 
