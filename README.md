@@ -5,6 +5,9 @@ Own This Website is an overengineered, experimental King of the Hill style game 
 ## Installation
 The app is separated into two parts: a static `app` folder that can be served from gh-pages or a CDN, and a super-simple `server` folder for serving and storing player scores.
 
+### Fork it
+First, fork the repo and clone it to your local machine by typing `git clone https://github.com/<YOUR-GITHUB-HANDLE>/own-this-website.git`. This will clone the `app`, `server`, and `test` folders, as well as this lovely `README`.
+
 ### Server
 Make sure your server is running [redis](http://redis.io/topics/quickstart) and has [node.js](http://nodejs.org/download/) installed before continuing.
 
@@ -19,7 +22,22 @@ redis-server
 node main.js
 ```
 
-If you want to keep the app running after you've logged off, check out [forever](https://www.npmjs.org/package/forever).
+#### Forever + Nodemon
+
+If you want to keep the app running after you've logged off, check out [forever](https://www.npmjs.org/package/forever) and [nodemon](http://nodemon.io/). These can be installed using npm
+
+```.bash
+npm install -g forever
+npm install -g nodemon
+```
+
+and run from within `/server` with something like this:
+
+```.bash
+forever start --spinSleepTime 10000 nodemon --exitcrash
+```
+
+Nodemon should know to call `main.js` based on `package.json`, but if any of this doesn't work a more involved command is included in the comments of `main.js`.
 
 #### Ports
 Right now, node is listening on port `8000` and redis is on port `6379`; if you want to use something different, just do a project-wide find (command + shift + F in Sublime) and make sure to replace all instances.
