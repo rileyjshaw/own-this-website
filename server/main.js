@@ -60,10 +60,10 @@ function setKing(name, socket) {
   var ipSpamCount = ipSpamChecker[socket.ipAddress];
   var socketSpamCount = socketSpamChecker[socket.id];
 
-  // Check for spamming from a single socket (warning at > 2 / second)
+  // Check for spamming from a single socket (warning at > 3 / second)
   if(!socketSpamCount) {
     socketSpamChecker[socket.id] = 1;
-  } else if(socketSpamCount > 2) {
+  } else if(socketSpamCount > 3) {
     if(socket.socketWarningFlag) {
       socket.emit('news', 'There\'s too much traffic from your computer; refresh to reconnect!');
       socket.disconnect();
