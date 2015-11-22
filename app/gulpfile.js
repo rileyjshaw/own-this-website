@@ -54,9 +54,9 @@ var paths = {
 gulp.task('build_app', function() {
   var debug;
   if(argv.dev) {
-    debug: true;
+    debug = true;
   } else {
-    debug: false;
+    debug = false;
     process.env.NODE_ENV = 'production';
   }
 
