@@ -32,12 +32,12 @@ var ThroneMid = React.createClass({
     this.toggleFormDisplay();
     this.props.onNameSubmit(name);
   },
-  handleBlur: function(element) {
+  handleBlur: function(event) {
     //jumping through hoops because blur event might trigger
     //before submit, which kills the form when the submit
     //button is clicked
     setTimeout(function() {
-      if(!element.contains(document.activeElement)) {
+      if(!event.target.contains(document.activeElement)) {
         this.toggleFormDisplay();
       }
     }.bind(this), 1);
