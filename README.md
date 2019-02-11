@@ -84,7 +84,7 @@ You're good to go!
 
 ### Testing
 
-Testing is done with [mocha](http://mochajs.org/) and [should](https://github.com/visionmedia/should.js/). To get set up, all you need to do is:
+Testing is done with [mocha](http://mochajs.org/) and [should](https://github.com/shouldjs/should.js). To get set up, all you need to do is:
 
 ```.bash
 npm install -g mocha
